@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Video Downloader</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <header>
+        <i class="fab fa-youtube"></i>
+        <h1>YouTube Video Downloader</h1>
+    </header>
+
+    <main>
+        <div class="container">
+            <form id="download-form">
+                <div class="input-group">
+                    <label for="url">Enter YouTube URL</label>
+                    <div class="url-input">
+                        <input type="text" id="url" name="url" placeholder="https://www.youtube.com/watch?v=..." required>
+                        <button type="submit" class="convert-btn">
+                            <i class="fas fa-download"></i>
+                            Convert
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+            <div id="video-preview" class="video-preview hidden">
+                <div class="thumbnail">
+                    <img id="thumbnail" src="" alt="Video thumbnail">
+                </div>
+                <div class="video-info">
+                    <h3 id="video-title"></h3>
+                    <div class="video-meta">
+                        <p id="author"></p>
+                        <p id="duration"></p>
+                        <p id="views"></p>
+                    </div>
+                    <div class="quality-selector">
+                        <label for="quality">Select Quality</label>
+                        <select id="quality" name="quality">
+                            <option value="best">Best Quality (Auto)</option>
+                        </select>
+                    </div>
+                    <div class="download-options">
+                        <button id="download-btn" class="download-btn">
+                            <i class="fas fa-download"></i>
+                            Download Video
+                        </button>
+                    </div>
+                    <div id="status" class="status"></div>
+                    <div id="progress-container" class="progress-bar hidden">
+                        <div id="progress" class="progress"></div>
+                    </div>
+                </div>
+            </div>
+
+            <section class="about-section">
+                <div class="about-content">
+                    <h2>About This Tool</h2>
+                    <p>A powerful and user-friendly YouTube video downloader that helps you save your favorite videos for offline viewing. Built with modern web technologies and a focus on user experience.</p>
+                    
+                    <div class="creator-info">
+                        <h3>Created by</h3>
+                        <div class="creator-cards">
+                            <div class="creator-card">
+                                <h4>Ashish Chaurasiya</h4>
+                                <div class="social-links">
+                                    <a href="https://github.com/ashishchaurasiya" target="_blank" rel="noopener noreferrer">
+                                        <i class="fab fa-github"></i> GitHub
+                                    </a>
+                                    <a href="https://linkedin.com/in/ashishchaurasiya" target="_blank" rel="noopener noreferrer">
+                                        <i class="fab fa-linkedin"></i> LinkedIn
+                                    </a>
+                                    <a href="https://twitter.com/ashishchaurasiya" target="_blank" rel="noopener noreferrer">
+                                        <i class="fab fa-twitter"></i> Twitter
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="creator-card">
+                                <h4>ZeroAxiis</h4>
+                                <div class="social-links">
+                                    <a href="https://github.com/zeroaxiis" target="_blank" rel="noopener noreferrer">
+                                        <i class="fab fa-github"></i> GitHub
+                                    </a>
+                                    <a href="https://linkedin.com/in/zeroaxiis" target="_blank" rel="noopener noreferrer">
+                                        <i class="fab fa-linkedin"></i> LinkedIn
+                                    </a>
+                                    <a href="https://twitter.com/zeroaxiis" target="_blank" rel="noopener noreferrer">
+                                        <i class="fab fa-twitter"></i> Twitter
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="features">
+                        <h3>Features</h3>
+                        <ul>
+                            <li><i class="fas fa-check"></i> High-quality video downloads</li>
+                            <li><i class="fas fa-check"></i> Multiple quality options</li>
+                            <li><i class="fas fa-check"></i> Fast and reliable downloads</li>
+                            <li><i class="fas fa-check"></i> Modern and intuitive interface</li>
+                            <li><i class="fas fa-check"></i> Support for both video and audio formats</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2024 YouTube Video Downloader. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="/">Home</a>
+                <a href="/about">About</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
