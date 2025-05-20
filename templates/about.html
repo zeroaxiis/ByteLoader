@@ -10,59 +10,246 @@
 <body>
     <header>
         <div class="header-content">
-            <i class="fas fa-download"></i>
-            <h1>ByteLoader</h1>
+            <div class="logo">
+                <i class="fas fa-bolt"></i>
+                <h1>ByteLoader</h1>
+            </div>
+            <nav>
+                <a href="/" class="nav-link">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </a>
+                <a href="/about" class="nav-link active">
+                    <i class="fas fa-info-circle"></i>
+                    <span>About</span>
+                </a>
+                <button class="theme-toggle" onclick="toggleTheme()">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </nav>
         </div>
     </header>
 
     <main>
         <section class="about-section">
-            <div class="about-content">
-                <h2>About ByteLoader</h2>
-                <p>ByteLoader is a powerful and user-friendly YouTube video downloader that helps you save your favorite videos for offline viewing. Built with modern web technologies and a focus on user experience, ByteLoader makes it easy to download videos in various qualities and formats.</p>
-                
-                <div class="creator-info">
-                    <h3>Created by</h3>
-                    <div class="creator-cards">
-                        <div class="creator-card">
-                            <h4>Ashish Chaurasiya</h4>
-                            <div class="social-links">
-                                <a href="https://github.com/ashishchaurasiya" target="_blank"><i class="fab fa-github"></i></a>
-                                <a href="https://linkedin.com/in/ashishchaurasiya" target="_blank"><i class="fab fa-linkedin"></i></a>
-                                <a href="https://twitter.com/ashishchaurasiya" target="_blank"><i class="fab fa-twitter"></i></a>
+            <div class="about-hero">
+                <div class="hero-content">
+                    <div class="hero-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h2>About ByteLoader</h2>
+                    <p>ByteLoader is a powerful and user-friendly YouTube video downloader built with Python and Flask. 
+                    Download videos in various qualities and formats with ease.</p>
+                </div>
+            </div>
+
+            <div class="features-section">
+                <div class="section-header">
+                    <div class="header-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h3>Features</h3>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <div class="feature-content">
+                            <h4>Lightning Fast</h4>
+                            <p>Download videos at maximum speed with our optimized system</p>
+                            <div class="feature-stats">
+                                <span class="stat">
+                                    <i class="fas fa-tachometer-alt"></i>
+                                    <span>10x Faster</span>
+                                </span>
                             </div>
                         </div>
-                        <div class="creator-card">
-                            <h4>ZeroAxiis</h4>
-                            <div class="social-links">
-                                <a href="https://github.com/zeroaxiis" target="_blank"><i class="fab fa-github"></i></a>
-                                <a href="https://linkedin.com/in/zeroaxiis" target="_blank"><i class="fab fa-linkedin"></i></a>
-                                <a href="https://twitter.com/zeroaxiis" target="_blank"><i class="fab fa-twitter"></i></a>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-film"></i>
+                        </div>
+                        <div class="feature-content">
+                            <h4>Premium Quality</h4>
+                            <p>Choose from various video qualities to suit your needs</p>
+                            <div class="feature-stats">
+                                <span class="stat">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>HD Ready</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-music"></i>
+                        </div>
+                        <div class="feature-content">
+                            <h4>Audio Magic</h4>
+                            <p>Extract audio from videos in different formats</p>
+                            <div class="feature-stats">
+                                <span class="stat">
+                                    <i class="fas fa-file-audio"></i>
+                                    <span>Multi-Format</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <div class="feature-content">
+                            <h4>Mobile First</h4>
+                            <p>Works perfectly on all devices and screen sizes</p>
+                            <div class="feature-stats">
+                                <span class="stat">
+                                    <i class="fas fa-sync"></i>
+                                    <span>Responsive</span>
+                                </span>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <div class="features">
-                    <h3>Features</h3>
-                    <ul>
-                        <li><i class="fas fa-check"></i> High-quality video downloads</li>
-                        <li><i class="fas fa-check"></i> Multiple quality options</li>
-                        <li><i class="fas fa-check"></i> Fast download speeds</li>
-                        <li><i class="fas fa-check"></i> Intuitive interface</li>
-                        <li><i class="fas fa-check"></i> Support for video and audio formats</li>
-                    </ul>
+            <div class="authors-section">
+                <div class="section-header">
+                    <div class="header-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Meet the Team</h3>
+                </div>
+                <div class="authors-grid">
+                    <div class="author-card">
+                        <div class="author-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="author-content">
+                            <div class="author-info">
+                                <h4>DrDead0</h4>
+                                <p class="author-name">Ashish Chaurasia</p>
+                            </div>
+                            <div class="author-role">
+                                <i class="fas fa-code-branch"></i>
+                                <span>Initial work</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="author-card">
+                        <div class="author-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="author-content">
+                            <div class="author-info">
+                                <h4>DarkDeity666</h4>
+                                <p class="author-name">Dark Deity</p>
+                            </div>
+                            <div class="author-role">
+                                <i class="fas fa-code-branch"></i>
+                                <span>Contributor</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tech-section">
+                <div class="section-header">
+                    <div class="header-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>Technologies Used</h3>
+                </div>
+                <div class="tech-grid">
+                    <div class="tech-card">
+                        <div class="tech-header">
+                            <i class="fas fa-server"></i>
+                            <h4>Backend</h4>
+                        </div>
+                        <ul class="tech-list">
+                            <li>
+                                <i class="fab fa-python"></i>
+                                <span>Python</span>
+                                <span class="tech-desc">Core programming language</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-flask"></i>
+                                <span>Flask</span>
+                                <span class="tech-desc">Web framework</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-download"></i>
+                                <span>yt-dlp</span>
+                                <span class="tech-desc">Video downloader</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-exchange-alt"></i>
+                                <span>requests</span>
+                                <span class="tech-desc">HTTP library</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="tech-card">
+                        <div class="tech-header">
+                            <i class="fas fa-laptop-code"></i>
+                            <h4>Frontend</h4>
+                        </div>
+                        <ul class="tech-list">
+                            <li>
+                                <i class="fab fa-html5"></i>
+                                <span>HTML5</span>
+                                <span class="tech-desc">Structure</span>
+                            </li>
+                            <li>
+                                <i class="fab fa-css3-alt"></i>
+                                <span>CSS3</span>
+                                <span class="tech-desc">Styling</span>
+                            </li>
+                            <li>
+                                <i class="fab fa-js"></i>
+                                <span>JavaScript</span>
+                                <span class="tech-desc">Interactivity</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-icons"></i>
+                                <span>Font Awesome</span>
+                                <span class="tech-desc">Icons</span>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </section>
     </main>
 
     <footer>
-        <p>&copy; 2024 ByteLoader. All rights reserved.</p>
+        <p>© 2024 ByteLoader. All rights reserved.</p>
         <nav>
             <a href="/">Home</a>
             <a href="/about">About</a>
         </nav>
+        <p class="disclaimer">This tool is for personal use only. Please respect YouTube's terms of service.</p>
     </footer>
+
+    <script>
+        function toggleTheme() {
+            const body = document.body;
+            const currentTheme = body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            body.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            
+            const themeIcon = document.querySelector('.theme-toggle i');
+            themeIcon.className = newTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+        }
+
+        // Set initial theme
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.body.setAttribute('data-theme', savedTheme);
+        const themeIcon = document.querySelector('.theme-toggle i');
+        themeIcon.className = savedTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+    </script>
 </body>
 </html> 
