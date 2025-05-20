@@ -27,8 +27,8 @@ A powerful and user-friendly YouTube video downloader built with Python and Flas
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/byteloader.git
-cd byteloader
+git clone https://github.com/zeroaxiis/ByteLoader.git
+cd ByteLoader
 ```
 
 2. Create and activate a virtual environment:
@@ -81,7 +81,7 @@ http://localhost:5000
 ## 📦 Project Structure
 
 ```
-byteloader/
+ByteLoader/
 ├── app.py              # Main application file
 ├── requirements.txt    # Project dependencies
 ├── static/            # Static files
@@ -90,7 +90,9 @@ byteloader/
 ├── templates/         # HTML templates
 │   ├── index.html     # Main page
 │   └── about.html     # About page
-└── README.md          # Project documentation
+├── downloads/         # Directory for downloaded files
+├── venv/             # Virtual environment
+└── README.md         # Project documentation
 ```
 
 ## 🔧 Configuration
@@ -117,8 +119,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 👥 Authors
 
-- **Ashish Chaurasiya** - *Initial work*
-- **ZeroAxiis** - *Contributor*
+- **DrDead0** (Ashish Chaurasia) - *Initial work*
+- **DarkDeity666** (Dark Deity) - *Contributor*
 
 ## 🙏 Acknowledgments
 
