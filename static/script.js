@@ -102,10 +102,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const data = await response.json();
 
             if (!data.success) {
-                showStatus(data.message || 'Error loading video information', 'error');
-                progressContainer.classList.add('hidden');
-                setLoading(false);
-                return;
+                throw new Error(data.message || 'Error loading video information');
             }
 
             // Update video information
@@ -118,53 +115,215 @@ document.addEventListener('DOMContentLoaded', function() {
             duration.textContent = formatDuration(data.duration);
             views.textContent = formatViews(data.views);
 
-            // Update quality options
+            // Process all formats
+            const formats = data.formats;
+            console.log('All available formats:', formats);
+            
+            // Group formats by type
+            const videoWithAudio = formats.filter(f => f.type === 'video' && f.acodec !== 'none');
+            const videoOnly = formats.filter(f => f.type === 'video' && f.acodec === 'none');
+            const audioOnly = formats.filter(f => f.type === 'audio');
+            
+            console.log('Video with Audio:', videoWithAudio);
+            console.log('Video Only:', videoOnly);
+            console.log('Audio Only:', audioOnly);
+            
+            // Clear existing options
             qualitySelect.innerHTML = '';
             
-            // Add video formats
-            const videoFormats = data.formats.filter(f => f.type === 'video' && f.format_note);
-            if (videoFormats.length > 0) {
+            // Add Video with Audio formats
+            if (videoWithAudio.length > 0) {
                 const videoGroup = document.createElement('optgroup');
-                videoGroup.label = 'Video Formats';
+                videoGroup.label = '🎥 Video with Audio';
                 
-                // Sort video formats by quality (highest first)
-                videoFormats.sort((a, b) => {
-                    const qualityA = parseInt(a.format_note) || 0;
-                    const qualityB = parseInt(b.format_note) || 0;
-                    return qualityB - qualityA;
+                // Sort video formats by quality
+                videoWithAudio.sort((a, b) => {
+                    // First sort by height
+                    const heightA = a.height || 0;
+                    const heightB = b.height || 0;
+                    if (heightB !== heightA) return heightB - heightA;
+                    
+                    // Then by fps
+                    const fpsA = a.fps || 0;
+                    const fpsB = b.fps || 0;
+                    if (fpsB !== fpsA) return fpsB - fpsA;
+                    
+                    // Then by bitrate
+                    const vbrA = a.vbr || 0;
+                    const vbrB = b.vbr || 0;
+                    return vbrB - vbrA;
                 });
 
-                videoFormats.forEach(format => {
+                // Add each video format
+                videoWithAudio.forEach(format => {
                     const option = document.createElement('option');
                     option.value = format.format_id;
-                    const quality = format.format_note || 'Unknown';
-                    const fps = format.fps ? ` ${format.fps}fps` : '';
-                    const size = format.filesize ? ` (${formatFileSize(format.filesize)})` : '';
-                    option.textContent = `${quality}p${fps} - ${format.ext.toUpperCase()}${size}`;
+                    
+                    // Build format description
+                    let formatDesc = [];
+                    
+                    // Resolution
+                    if (format.height) {
+                        let quality = '';
+                        if (format.height >= 2160) quality = '4K';
+                        else if (format.height >= 1440) quality = '2K';
+                        else if (format.height >= 1080) quality = '1080p';
+                        else if (format.height >= 720) quality = '720p';
+                        else if (format.height >= 480) quality = '480p';
+                        else if (format.height >= 360) quality = '360p';
+                        else if (format.height >= 240) quality = '240p';
+                        else if (format.height >= 144) quality = '144p';
+                        formatDesc.push(quality);
+                    }
+                    
+                    // FPS
+                    if (format.fps) {
+                        formatDesc.push(`${format.fps}fps`);
+                    }
+                    
+                    // Codec
+                    if (format.vcodec && format.vcodec !== 'none') {
+                        const codec = format.vcodec.split('.')[0]; // Get main codec name
+                        formatDesc.push(codec);
+                    }
+                    
+                    // Bitrate
+                    if (format.vbr) {
+                        formatDesc.push(`${Math.round(format.vbr)}kbps`);
+                    }
+                    
+                    // Extension
+                    if (format.ext) {
+                        formatDesc.push(format.ext.toUpperCase());
+                    }
+                    
+                    // File size
+                    if (format.filesize) {
+                        formatDesc.push(`(${formatFileSize(format.filesize)})`);
+                    }
+                    
+                    option.textContent = formatDesc.join(' • ');
                     videoGroup.appendChild(option);
                 });
                 qualitySelect.appendChild(videoGroup);
             }
 
-            // Add audio formats
-            const audioFormats = data.formats.filter(f => f.type === 'audio');
-            if (audioFormats.length > 0) {
-                const audioGroup = document.createElement('optgroup');
-                audioGroup.label = 'Audio Formats';
+            // Add Video Only formats
+            if (videoOnly.length > 0) {
+                const videoOnlyGroup = document.createElement('optgroup');
+                videoOnlyGroup.label = '🎬 Video Only';
                 
-                // Sort audio formats by quality (highest first)
-                audioFormats.sort((a, b) => {
+                // Sort video formats by quality
+                videoOnly.sort((a, b) => {
+                    const heightA = a.height || 0;
+                    const heightB = b.height || 0;
+                    if (heightB !== heightA) return heightB - heightA;
+                    
+                    const fpsA = a.fps || 0;
+                    const fpsB = b.fps || 0;
+                    if (fpsB !== fpsA) return fpsB - fpsA;
+                    
+                    const vbrA = a.vbr || 0;
+                    const vbrB = b.vbr || 0;
+                    return vbrB - vbrA;
+                });
+
+                videoOnly.forEach(format => {
+                    const option = document.createElement('option');
+                    option.value = format.format_id;
+                    
+                    let formatDesc = [];
+                    
+                    if (format.height) {
+                        let quality = '';
+                        if (format.height >= 2160) quality = '4K';
+                        else if (format.height >= 1440) quality = '2K';
+                        else if (format.height >= 1080) quality = '1080p';
+                        else if (format.height >= 720) quality = '720p';
+                        else if (format.height >= 480) quality = '480p';
+                        else if (format.height >= 360) quality = '360p';
+                        else if (format.height >= 240) quality = '240p';
+                        else if (format.height >= 144) quality = '144p';
+                        formatDesc.push(quality);
+                    }
+                    
+                    if (format.fps) {
+                        formatDesc.push(`${format.fps}fps`);
+                    }
+                    
+                    if (format.vcodec && format.vcodec !== 'none') {
+                        const codec = format.vcodec.split('.')[0];
+                        formatDesc.push(codec);
+                    }
+                    
+                    if (format.vbr) {
+                        formatDesc.push(`${Math.round(format.vbr)}kbps`);
+                    }
+                    
+                    if (format.ext) {
+                        formatDesc.push(format.ext.toUpperCase());
+                    }
+                    
+                    if (format.filesize) {
+                        formatDesc.push(`(${formatFileSize(format.filesize)})`);
+                    }
+                    
+                    option.textContent = formatDesc.join(' • ');
+                    videoOnlyGroup.appendChild(option);
+                });
+                qualitySelect.appendChild(videoOnlyGroup);
+            }
+
+            // Add Audio Only formats
+            if (audioOnly.length > 0) {
+                const audioGroup = document.createElement('optgroup');
+                audioGroup.label = '🎵 Audio Only';
+                
+                // Sort audio formats by quality
+                audioOnly.sort((a, b) => {
                     const qualityA = parseInt(a.abr) || 0;
                     const qualityB = parseInt(b.abr) || 0;
                     return qualityB - qualityA;
                 });
 
-                audioFormats.forEach(format => {
+                audioOnly.forEach(format => {
                     const option = document.createElement('option');
                     option.value = format.format_id;
-                    const quality = format.abr ? `${format.abr}kbps` : 'Unknown';
-                    const size = format.filesize ? ` (${formatFileSize(format.filesize)})` : '';
-                    option.textContent = `${quality} - ${format.ext.toUpperCase()}${size}`;
+                    
+                    let formatDesc = [];
+                    
+                    // Quality label
+                    const abr = parseInt(format.abr) || 0;
+                    if (abr >= 192) {
+                        formatDesc.push('High Quality');
+                    } else if (abr >= 128) {
+                        formatDesc.push('Medium Quality');
+                    } else {
+                        formatDesc.push('Standard Quality');
+                    }
+                    
+                    // Bitrate
+                    if (format.abr) {
+                        formatDesc.push(`${format.abr}kbps`);
+                    }
+                    
+                    // Codec
+                    if (format.acodec && format.acodec !== 'none') {
+                        const codec = format.acodec.split('.')[0];
+                        formatDesc.push(codec);
+                    }
+                    
+                    // Extension
+                    if (format.ext) {
+                        formatDesc.push(format.ext.toUpperCase());
+                    }
+                    
+                    // File size
+                    if (format.filesize) {
+                        formatDesc.push(`(${formatFileSize(format.filesize)})`);
+                    }
+                    
+                    option.textContent = formatDesc.join(' • ');
                     audioGroup.appendChild(option);
                 });
                 qualitySelect.appendChild(audioGroup);
@@ -192,6 +351,7 @@ document.addEventListener('DOMContentLoaded', function() {
     downloadBtn.addEventListener('click', async function() {
         const url = urlInput.value.trim();
         const formatId = qualitySelect.value;
+        const isAudioOnly = qualitySelect.selectedOptions[0].parentElement.label === '🎵 Audio Only';
 
         if (!url) {
             showStatus('Please enter a YouTube URL', 'error');
@@ -199,6 +359,10 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         try {
+            // Disable download button and show loading state
+            downloadBtn.disabled = true;
+            downloadBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Downloading...';
+            
             showStatus('⏳ Preparing download... Please wait', 'info');
             progressContainer.classList.remove('hidden');
             updateProgress(10);
@@ -210,25 +374,45 @@ document.addEventListener('DOMContentLoaded', function() {
                 },
                 body: JSON.stringify({ 
                     url: url,
-                    format_id: formatId
+                    format_id: formatId,
+                    extract_audio: isAudioOnly
                 })
             });
 
-            showStatus('📥 Downloading video... This may take a while', 'info');
-            updateProgress(50);
-
             if (!response.ok) {
-                throw new Error('Download failed');
+                const errorData = await response.json();
+                throw new Error(errorData.message || 'Download failed');
             }
 
-            showStatus('⚙️ Processing video file... Almost done!', 'info');
+            showStatus('📥 Downloading... This may take a while', 'info');
+            updateProgress(50);
+
+            // Get the blob from the response
+            const blob = await response.blob();
+            
+            if (blob.size === 0) {
+                throw new Error('Downloaded file is empty');
+            }
+
+            showStatus('⚙️ Processing file... Almost done!', 'info');
             updateProgress(80);
 
-            const blob = await response.blob();
+            // Create a download link
             const downloadUrl = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = downloadUrl;
-            a.download = 'video.' + (formatId === 'best' ? 'mp4' : 'mp3');
+            
+            // Get filename from response headers or use default
+            const contentDisposition = response.headers.get('content-disposition');
+            let filename = isAudioOnly ? 'audio.mp3' : 'video.mp4';
+            if (contentDisposition) {
+                const filenameMatch = contentDisposition.match(/filename="(.+)"/);
+                if (filenameMatch) {
+                    filename = filenameMatch[1];
+                }
+            }
+            
+            a.download = filename;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
@@ -244,8 +428,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
         } catch (error) {
             console.error('Error:', error);
-            showStatus('❌ Error downloading video. Please try again.', 'error');
+            showStatus('❌ ' + (error.message || 'Error downloading. Please try again.'), 'error');
             progressContainer.classList.add('hidden');
+        } finally {
+            // Re-enable download button and restore original text
+            downloadBtn.disabled = false;
+            downloadBtn.innerHTML = '<i class="fas fa-download"></i> Download';
         }
     });
 
